@@ -38,7 +38,6 @@ device_name = tf.test.gpu_device_name()
 # if device_name != '/device:GPU:0':
 #   raise SystemError('GPU device not found')
 print('Found GPU at: {}'.format(device_name))
-print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 
 ############################################################
 #  My Model Configurations (which you should change for your own task)
