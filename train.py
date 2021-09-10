@@ -10,7 +10,7 @@ import numpy as np
 import skimage.draw
  
 # Root directory of the project
-ROOT_DIR = os.path.abspath("../..")
+ROOT_DIR = os.path.abspath("../")
  
 # Import Mask RCNN
 sys.path.append(ROOT_DIR)  # To find local version of the library
@@ -230,7 +230,7 @@ def train(dataset_train, dataset_val, model):
     print("Training network heads")
     model.train(dataset_train, dataset_val,
                 learning_rate=config.LEARNING_RATE,
-                epochs=15,
+                epochs=30,
                 layers='heads')
  
 def test(model, image_path = None, video_path=None, savedfile=None):
