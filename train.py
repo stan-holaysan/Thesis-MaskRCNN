@@ -229,8 +229,8 @@ def train(dataset_train, dataset_val, model):
     # *** This training schedule is an example. Update to your needs ***
     print("Training network heads")
     model.train(dataset_train, dataset_val,
-                learning_rate=config.LEARNING_RATE,
-                epochs=30,
+                learning_rate=0.002,
+                epochs=10,
                 layers='heads')
  
 def test(model, image_path = None, video_path=None, savedfile=None):
