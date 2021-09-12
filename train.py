@@ -52,7 +52,7 @@ class ModelConfig(Config):
  
     # We use a GPU with 12GB memory, which can fit two images.
     # Adjust down if you use a smaller GPU.
-    IMAGES_PER_GPU = 2 # 1
+    IMAGES_PER_GPU = 1 # 1
  
     # Number of classes (including background)
     NUM_CLASSES = 1 + 2# Background,
@@ -60,7 +60,7 @@ class ModelConfig(Config):
     # if you want to test your model, better set it corectly based on your trainning dataset
  
     # Number of training steps per epoch
-    STEPS_PER_EPOCH = 100
+    STEPS_PER_EPOCH = 30
  
     # Skip detections with < 90% confidence
     DETECTION_MIN_CONFIDENCE = 0.9
