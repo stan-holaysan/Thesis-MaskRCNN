@@ -8,6 +8,7 @@ import json
 import datetime
 import numpy as np
 import skimage.draw
+import imgaug
  
 # Root directory of the project
 ROOT_DIR = os.path.abspath("../")
@@ -60,7 +61,7 @@ class ModelConfig(Config):
     # if you want to test your model, better set it corectly based on your trainning dataset
  
     # Number of training steps per epoch
-    STEPS_PER_EPOCH = 175
+#     STEPS_PER_EPOCH = 175
  
     # Skip detections with < 90% confidence
     DETECTION_MIN_CONFIDENCE = 0.9
@@ -232,16 +233,16 @@ def train(dataset_train, dataset_val, model):
                 learning_rate=0.002,
                 epochs=10,
                 layers='heads',
-                augmentation=imgaug.Sometimes(5/6,aug.OneOf(
-                                                                [
-                                                                imgaug.augmenters.Fliplr(1), 
-                                                                imgaug.augmenters.Flipud(1), 
-                                                                imgaug.augmenters.Affine(rotate=(-45, 45)), 
-                                                                imgaug.augmenters.Affine(rotate=(-90, 90)), 
-                                                                imgaug.augmenters.Affine(scale=(0.5, 1.5))
-                                                                ]
-                                                            )
+                augmentation=imgaug.Sequential(
+                                                [
+                                                imgaug.augmenters.Fliplr(1), 
+                                                imgaug.augmenters.Flipud(1), 
+                                                imgaug.augmenters.Affine(rotate=(-45, 45)), 
+                                                imgaug.augmenters.Affine(rotate=(-90, 90)), 
+                                                imgaug.augmenters.Affine(scale=(0.5, 1.5))
+                                                ]
                                               )
+               )
  
 def test(model, image_path = None, video_path=None, savedfile=None):
     assert image_path or video_path
