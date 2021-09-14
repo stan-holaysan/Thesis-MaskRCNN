@@ -52,7 +52,7 @@ class ModelConfig(Config):
  
     # We use a GPU with 12GB memory, which can fit two images.
     # Adjust down if you use a smaller GPU.
-    IMAGES_PER_GPU = 1 # 1
+    IMAGES_PER_GPU = 2 # 1
  
     # Number of classes (including background)
     NUM_CLASSES = 1 + 2# Background,
@@ -60,7 +60,7 @@ class ModelConfig(Config):
     # if you want to test your model, better set it corectly based on your trainning dataset
  
     # Number of training steps per epoch
-    STEPS_PER_EPOCH = 30
+    STEPS_PER_EPOCH = 175
  
     # Skip detections with < 90% confidence
     DETECTION_MIN_CONFIDENCE = 0.9
@@ -69,7 +69,7 @@ class InferenceConfig(ModelConfig):
     # Set batch size to 1 since we'll be running inference on
     # one image at a time. Batch size = GPU_COUNT * IMAGES_PER_GPU
     GPU_COUNT = 1
-    IMAGES_PER_GPU = 1
+    IMAGES_PER_GPU = 2
  
 ############################################################
 #  Dataset (My labelme dataset loader)
@@ -231,7 +231,17 @@ def train(dataset_train, dataset_val, model):
     model.train(dataset_train, dataset_val,
                 learning_rate=0.002,
                 epochs=10,
-                layers='heads')
+                layers='heads',
+                augmentation=imgaug.Sometimes(5/6,aug.OneOf(
+                                                                [
+                                                                imgaug.augmenters.Fliplr(1), 
+                                                                imgaug.augmenters.Flipud(1), 
+                                                                imgaug.augmenters.Affine(rotate=(-45, 45)), 
+                                                                imgaug.augmenters.Affine(rotate=(-90, 90)), 
+                                                                imgaug.augmenters.Affine(scale=(0.5, 1.5))
+                                                                ]
+                                                            )
+                                              )
  
 def test(model, image_path = None, video_path=None, savedfile=None):
     assert image_path or video_path
