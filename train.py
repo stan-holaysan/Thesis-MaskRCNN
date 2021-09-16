@@ -61,7 +61,7 @@ class ModelConfig(Config):
     # if you want to test your model, better set it corectly based on your trainning dataset
  
     # Number of training steps per epoch
-    STEPS_PER_EPOCH = 175
+    STEPS_PER_EPOCH = 100
  
     # Skip detections with < 90% confidence
     DETECTION_MIN_CONFIDENCE = 0.9
