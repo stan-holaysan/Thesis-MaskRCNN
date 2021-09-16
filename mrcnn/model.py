@@ -1897,7 +1897,7 @@ class MaskRCNN():
             _, C2, C3, C4, C5 = config.BACKBONE(input_image, stage5=True,
                                                 train_bn=config.TRAIN_BN)
         else:
-            _, C2, C3, C4, C5 = resnet_graph(input_image, config.BACKBONE,
+            _, C2, C3, C4, C5 = resnet_graph(input_image, "resnet50",
                                              stage5=True, train_bn=config.TRAIN_BN)
         # Top-down Layers
         # TODO: add assert to varify feature map sizes match what's in config
