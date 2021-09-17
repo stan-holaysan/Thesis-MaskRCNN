@@ -8,6 +8,7 @@ import json
 import datetime
 import numpy as np
 import skimage.draw
+import imgaug
  
 # Root directory of the project
 ROOT_DIR = os.path.abspath("../")
@@ -25,7 +26,7 @@ COCO_WEIGHTS_PATH = os.path.join(ROOT_DIR, "mask_rcnn_coco.h5")
  
 # Directory to save logs and model checkpoints, if not provided
 # through the command line argument --logs
-DEFAULT_LOGS_DIR = os.path.join(ROOT_DIR, "logs")
+DEFAULT_LOGS_DIR = os.path.join(ROOT_DIR, "drive/MyDrive/Thesis/logs")
  
 # Change it for your dataset's name
 source="mydataset"
@@ -69,7 +70,7 @@ class InferenceConfig(ModelConfig):
     # Set batch size to 1 since we'll be running inference on
     # one image at a time. Batch size = GPU_COUNT * IMAGES_PER_GPU
     GPU_COUNT = 1
-    IMAGES_PER_GPU = 1
+    IMAGES_PER_GPU = 2
  
 ############################################################
 #  Dataset (My labelme dataset loader)
@@ -229,9 +230,19 @@ def train(dataset_train, dataset_val, model):
     # *** This training schedule is an example. Update to your needs ***
     print("Training network heads")
     model.train(dataset_train, dataset_val,
-                learning_rate=config.LEARNING_RATE,
-                epochs=30,
-                layers='heads')
+                learning_rate=0.002,
+                epochs=10,
+                layers='heads',
+                augmentation=imgaug.augmenters.Sequential(
+                                                [
+                                                imgaug.augmenters.Fliplr(1), 
+                                                imgaug.augmenters.Flipud(1), 
+                                                imgaug.augmenters.Affine(rotate=(-45, 45)), 
+                                                imgaug.augmenters.Affine(rotate=(-90, 90)), 
+                                                imgaug.augmenters.Affine(scale=(0.5, 1.5))
+                                                ]
+                                              )
+               )
  
 def test(model, image_path = None, video_path=None, savedfile=None):
     assert image_path or video_path
