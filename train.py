@@ -26,7 +26,7 @@ COCO_WEIGHTS_PATH = os.path.join(ROOT_DIR, "mask_rcnn_coco.h5")
  
 # Directory to save logs and model checkpoints, if not provided
 # through the command line argument --logs
-DEFAULT_LOGS_DIR = os.path.join(ROOT_DIR, "drive/MyDrive/Thesis/logs")
+DEFAULT_LOGS_DIR = os.path.join(ROOT_DIR, "logs")
  
 # Change it for your dataset's name
 source="mydataset"
@@ -61,7 +61,7 @@ class ModelConfig(Config):
     # if you want to test your model, better set it corectly based on your trainning dataset
  
     # Number of training steps per epoch
-    STEPS_PER_EPOCH = 175
+#     STEPS_PER_EPOCH = 175
  
     # Skip detections with < 90% confidence
     DETECTION_MIN_CONFIDENCE = 0.9
@@ -233,7 +233,7 @@ def train(dataset_train, dataset_val, model):
                 learning_rate=0.002,
                 epochs=10,
                 layers='heads',
-                augmentation=imgaug.augmenters.Sequential(
+                augmentation=imgaug.Sequential(
                                                 [
                                                 imgaug.augmenters.Fliplr(1), 
                                                 imgaug.augmenters.Flipud(1), 
