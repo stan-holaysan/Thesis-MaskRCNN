@@ -231,7 +231,7 @@ def train(dataset_train, dataset_val, model):
     print("Training network heads")
     model.train(dataset_train, dataset_val,
                 learning_rate=0.002,
-                epochs=10,
+                epochs=30,
                 layers='heads',
                 augmentation=imgaug.augmenters.Sequential(
                                                 [
