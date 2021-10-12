@@ -26,7 +26,7 @@ COCO_WEIGHTS_PATH = os.path.join(ROOT_DIR, "mask_rcnn_coco.h5")
  
 # Directory to save logs and model checkpoints, if not provided
 # through the command line argument --logs
-DEFAULT_LOGS_DIR = os.path.join(ROOT_DIR, "drive/MyDrive/Thesis/logs")
+DEFAULT_LOGS_DIR = os.path.join(ROOT_DIR, "drive/MyDrive/Thesis/logs5")
  
 # Change it for your dataset's name
 source="mydataset"
@@ -231,7 +231,7 @@ def train(dataset_train, dataset_val, model):
     print("Training network heads")
     model.train(dataset_train, dataset_val,
                 learning_rate=0.002,
-                epochs=45,
+                epochs=80,
                 layers='heads',
                 augmentation=imgaug.augmenters.Sequential(
                                                 [
